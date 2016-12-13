@@ -3,13 +3,18 @@ package View;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -27,13 +32,16 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-public class ImcView extends JFrame implements ActionListener, KeyListener {
+public class ImcView extends JFrame implements ActionListener, KeyListener,
+		MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panelNome, panelCalculo, panelGenero;
+	private JPanel panelNome, panelCalculo, panelGenero, panelRodape,
+			panelResultado;
 	private JLabel labelNome, labelPeso, labelAltura, labelMetro, labelCm,
 			labelIdade, labelTitulo, labelNomeTitulo, labelCalculoTitulo,
-			labelWoman, labelMen, labelKilo, labelGrama;
+			labelWoman, labelMen, labelKilo, labelGrama, labelLinkFonte,
+			labelImcRodape, labelVersaoRodape;
 	private JTextField textNome, textMetro, textCm, textKilo, textGrama;
 	private JSpinner spinnerIdade;
 	private SpinnerModel spinnerNumberModel;
@@ -129,7 +137,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ############ INSTANCIA O 1o JPANEL ##################################
+		 * ############ INSTANCIA O 1o JPANEL (Tela Inicio)#####################
 		 */
 		panelNome = new JPanel(null);
 		panelNome.setBounds(290, 0, 600, 600);
@@ -142,7 +150,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ############ INSTANCIA O 2o JPANEL ##################################
+		 * ############ INSTANCIA O JPANEL (Tela Calculo)####################
 		 */
 		panelCalculo = new JPanel(null);
 		panelCalculo.setBounds(290, 0, 600, 600);
@@ -154,7 +162,19 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ############ INSTANCIA O 3o JPANEL ##################################
+		 * ############ INSTANCIA O JPANEL (Tela Resultados)####################
+		 */
+		panelResultado = new JPanel(null);
+		panelResultado.setBounds(290, 0, 600, 600);
+		panelResultado.setOpaque(false);
+		panelResultado.setVisible(false);
+		// panelCalculo.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.add(panelResultado);
+
+		/*
+		 * 
+		 * _____________________________________________________________________
+		 * ############ INSTANCIA O JPANEL (Genero)##########################
 		 * Filtset Genero
 		 */
 		blackline = BorderFactory.createLineBorder(Color.black);
@@ -171,7 +191,21 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ######### ADICIONANDO OS ATRIBUTOS NO 1o PANEL (panelNome) ##########
+		 * ############ INSTANCIA O JPANEL (Rodape)##########################
+		 */
+
+		panelRodape = new JPanel(null);
+		panelRodape.setLayout(new BorderLayout(150, 150));
+		panelRodape.setBounds(0, 631, 900, 40);
+		panelRodape.setVisible(true);
+		// panelRodape.setBorder(BorderFactory.createLineBorder(new Color(0, 0,
+		// 0)));
+		this.add(panelRodape);
+
+		/*
+		 * 
+		 * _____________________________________________________________________
+		 * ######### ADICIONANDO OS ATRIBUTOS NO PANEL (panelNome) ##########
 		 */
 
 		labelTitulo = new JLabel("Calcule seu IMC:");
@@ -200,7 +234,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ------- ADICIONANDO OS ATRIBUTOS NO 2o PANEL (panelCalculo) ---------
+		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (panelCalculo) ---------
 		 */
 
 		labelCalculoTitulo = new JLabel("Calculo IMC de:");
@@ -306,6 +340,34 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		buttonLimpar.setBounds(200, 550, 90, 40);
 		buttonLimpar.addActionListener(this);
 		panelCalculo.add(buttonLimpar);
+
+		/*
+		 * 
+		 * _____________________________________________________________________
+		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (panelResultado) ---------
+		 */
+
+		buttonNovoCalculo = new JButton("Novo Calculo");
+		buttonNovoCalculo.setBounds(200, 550, 90, 40);
+		buttonNovoCalculo.addActionListener(this);
+		panelResultado.add(buttonNovoCalculo);
+
+		/*
+		 * 
+		 * _____________________________________________________________________
+		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (Rodape) ---------
+		 */
+
+		labelLinkFonte = new JLabel("    http://indicedemassacorporal.com/");
+		labelImcRodape = new JLabel("::::SEU INDICE DE MASSA CORPORAL::::");
+		labelVersaoRodape = new JLabel(getVersao());
+		panelRodape.add(labelLinkFonte, BorderLayout.WEST);
+		panelRodape.add(labelImcRodape, BorderLayout.CENTER);
+		labelLinkFonte.addMouseListener(this);
+		panelRodape.add(labelVersaoRodape, BorderLayout.EAST);
+
+		panelRodape.revalidate();
+		;
 	}
 
 	// ________________________
@@ -314,9 +376,20 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 	/*
 	 * _____________________________________________________________________
 	 * 
+	 * ################## VERSAO DO SIATEMA ################################
+	 */
+
+	public String getVersao() {
+		return "V-IMC:0001SE         ";
+	}
+
+	/*
+	 * _____________________________________________________________________
+	 * 
 	 * ################## ACAO DO BUTTON ENTRAR ############################
 	 */
 	public void acaoEntrar() {
+
 		nomeTitulo = textNome.getText().toString();
 
 		if (!nomeTitulo.equals("")) {
@@ -327,14 +400,33 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 
 		panelNome.setVisible(false);
 		panelCalculo.setVisible(true);
-
 	}
 
+	/*
+	 * _____________________________________________________________________
+	 * 
+	 * ################## ACAO DO Hyperlink ################################
+	 */
+	public void hyperlink(String link) {
+
+		try {
+			Desktop.getDesktop().browse(new java.net.URI(link));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * _____________________________________________________________________
+	 * 
+	 * ################## ActionPerformed ##################################
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == buttonEntrar) {
 			acaoEntrar();
+
 		}
 
 		if (arg0.getSource() == buttonCalcular) {
@@ -379,10 +471,14 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 						} else {
 							resultado = "Obeso";
 						}
-
-						JOptionPane.showMessageDialog(null, "Seu IMC é: " + imc
-								+ ".\nResultado: " + resultado + ".", "Aterta",
-								INFORMATION_MESSAGE);
+						
+						panelCalculo.setVisible(false);
+						panelResultado.setVisible(true);
+						
+						// JOptionPane.showMessageDialog(null, "Seu IMC é: " +
+						// imc
+						// + ".\nResultado: " + resultado + ".", "Aterta",
+						// INFORMATION_MESSAGE);
 
 					} else {
 						JOptionPane.showMessageDialog(null,
@@ -408,23 +504,58 @@ public class ImcView extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
+	/*
+	 * _____________________________________________________________________
+	 * 
+	 * ################## EVENTO DO TECLADO ################################
+	 */
 	@Override
 	public void keyPressed(KeyEvent ke) {
 		if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
 			acaoEntrar();
 		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
 
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent ke) {
+	}
 
+	/*
+	 * _____________________________________________________________________
+	 * 
+	 * ################## EVENTO DO MOUSE ##################################
+	 */
+	@Override
+	public void mouseClicked(MouseEvent me) {
+		hyperlink("http://indicedemassacorporal.com/");
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseEntered(MouseEvent me) {
+		if (me.getSource() == labelLinkFonte) {
+			labelLinkFonte.setForeground(Color.BLUE);
+			getContentPane().setCursor(
+					Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		}
+	}
 
+	@Override
+	public void mouseExited(MouseEvent me) {
+		labelLinkFonte.setForeground(Color.BLACK);
+		getContentPane().setCursor(
+				Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	@Override
+	public void mousePressed(MouseEvent me) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent me) {
 	}
 }
