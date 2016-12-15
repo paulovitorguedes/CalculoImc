@@ -1,5 +1,4 @@
 # CalculoImc
 Sistema de calculo para índice de massa corporal (IMC)
 
-
-![alt tag](git@github.com:vitorcguedes/CalculoImc.git/CalculoImc/bin/Image/fundosite.jpg)
+![Alt Text](https://github.com/vitorcguedes/CalculoImc/raw/master/bin/Image/fundosite.jpg)
