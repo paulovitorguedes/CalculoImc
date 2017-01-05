@@ -1,8 +1,5 @@
 package View;
 
-import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
-import static javax.swing.JOptionPane.showMessageDialog;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -41,7 +38,8 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 	private JLabel labelNome, labelPeso, labelAltura, labelMetro, labelCm,
 			labelIdade, labelTitulo, labelNomeTitulo, labelCalculoTitulo,
 			labelWoman, labelMen, labelKilo, labelGrama, labelLinkFonte,
-			labelImcRodape, labelVersaoRodape;
+			labelImcRodape, labelVersaoRodape, labelTabelaMan,
+			labelResultadoCalculo;
 	private JTextField textNome, textMetro, textCm, textKilo, textGrama;
 	private JSpinner spinnerIdade;
 	private SpinnerModel spinnerNumberModel;
@@ -49,10 +47,11 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 	private ButtonGroup groupRadioGerero;
 	private JButton buttonEntrar, buttonCalcular, buttonLimpar,
 			buttonNovoCalculo;
-	private ImageIcon imgMan, imgWoman;
-	private String nomeTitulo;
+	private ImageIcon imgMan, imgWoman, imgTabelaMan;
+	private String nomeTitulo, resultado;
 	private Border blackline;
 	private TitledBorder title;
+	private double imc;
 
 	// _________________
 	// METODO CONSTRUTOR
@@ -245,7 +244,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 		labelNomeTitulo = new JLabel();
 		labelNomeTitulo.setFont(new Font("Times New Roman", Font.BOLD, 40));
 		labelNomeTitulo.setBounds(85, 100, 500, 100);
-		panelCalculo.add(labelNomeTitulo);
+		// panelCalculo.add(labelNomeTitulo);
 
 		labelIdade = new JLabel("Idade:*");
 		labelIdade.setFont(new Font("", Font.BOLD, 20));
@@ -333,11 +332,13 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 
 		buttonCalcular = new JButton("Calcular");
 		buttonCalcular.setBounds(90, 550, 90, 40);
+		buttonCalcular.setFocusPainted(false);
 		buttonCalcular.addActionListener(this);
 		panelCalculo.add(buttonCalcular);
 
 		buttonLimpar = new JButton("Limpar");
 		buttonLimpar.setBounds(200, 550, 90, 40);
+		buttonLimpar.setFocusPainted(false);
 		buttonLimpar.addActionListener(this);
 		panelCalculo.add(buttonLimpar);
 
@@ -347,15 +348,25 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (panelResultado) ---------
 		 */
 
-		buttonNovoCalculo = new JButton("Novo Calculo");
-		buttonNovoCalculo.setBounds(200, 550, 90, 40);
+		labelResultadoCalculo = new JLabel();
+		labelResultadoCalculo.setBounds(85, 150, 500, 100);
+		panelResultado.add(labelResultadoCalculo);
+
+		imgTabelaMan = new ImageIcon(this.getClass().getClassLoader()
+				.getResource("Image/imcTabelaMen.png"));
+		labelTabelaMan = new JLabel(imgTabelaMan);
+		labelTabelaMan.setBounds(20, 360, 510, 190);
+
+		buttonNovoCalculo = new JButton("Novo Cálculo");
+		buttonNovoCalculo.setBounds(200, 550, 110, 40);
+		buttonNovoCalculo.setFocusPainted(false);
 		buttonNovoCalculo.addActionListener(this);
 		panelResultado.add(buttonNovoCalculo);
 
 		/*
 		 * 
 		 * _____________________________________________________________________
-		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (Rodape) ---------
+		 * ------- ADICIONANDO OS ATRIBUTOS NO PANEL (Rodapé) ---------
 		 */
 
 		labelLinkFonte = new JLabel("    http://indicedemassacorporal.com/");
@@ -367,11 +378,24 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 		panelRodape.add(labelVersaoRodape, BorderLayout.EAST);
 
 		panelRodape.revalidate();
-		;
 	}
 
 	// ________________________
 	// FIM DO METODO CONSTRUTOR
+
+	/*
+	 * _____________________________________________________________________
+	 * 
+	 * ################## LIMPA TEXT ################################
+	 */
+	public void limpaText() {
+		textNome.setText("");
+		textCm.setText("");
+		textGrama.setText("");
+		textKilo.setText("");
+		textMetro.setText("");
+		spinnerIdade.setValue(16);
+	}
 
 	/*
 	 * _____________________________________________________________________
@@ -390,7 +414,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 	 */
 	public void acaoEntrar() {
 
-		nomeTitulo = textNome.getText().toString();
+		nomeTitulo = textNome.getText().toString().toUpperCase();
 
 		if (!nomeTitulo.equals("")) {
 			labelNomeTitulo.setText(nomeTitulo);
@@ -398,6 +422,7 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 			labelNomeTitulo.setText("Sem Nome ...");
 		}
 
+		panelCalculo.add(labelNomeTitulo);
 		panelNome.setVisible(false);
 		panelCalculo.setVisible(true);
 	}
@@ -419,9 +444,11 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 	/*
 	 * _____________________________________________________________________
 	 * 
-	 * ################## ActionPerformed ##################################
+	 * $$$$$$$$$$$$$$$$$$$$$ ActionPerformed $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	 * _____________________________________________________________________
 	 */
-	@Override
+
+	// /////ACÃO BOTAO ENTRAR
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == buttonEntrar) {
@@ -429,78 +456,85 @@ public class ImcView extends JFrame implements ActionListener, KeyListener,
 
 		}
 
+		// /////ACÃO BOTAO CALCULAR
 		if (arg0.getSource() == buttonCalcular) {
+			/*
+			 * if (textMetro.getText().trim().isEmpty() ||
+			 * textCm.getText().trim().isEmpty() ||
+			 * textKilo.getText().trim().isEmpty() ||
+			 * textGrama.getText().trim().isEmpty()) {
+			 * 
+			 * showMessageDialog(null,
+			 * "Favor preencher todos os campos obrigatórios", "Alerta",
+			 * JOptionPane.INFORMATION_MESSAGE);
+			 * 
+			 * // verifica se o genero foi selecionado } else if
+			 * (!radioMan.isSelected() && !radioWoman.isSelected()) {
+			 * 
+			 * showMessageDialog(null, "Favor informar o genero", "Alerta",
+			 * JOptionPane.INFORMATION_MESSAGE);
+			 * 
+			 * } else {
+			 */
+			// verifica a autenticidade dos valores inseridos
+			try {
+				double altura = Double.parseDouble(textMetro.getText() + "."
+						+ textCm.getText());
+				double peso = Double.parseDouble(textKilo.getText() + "."
+						+ textGrama.getText());
+				int idade = Integer
+						.parseInt(spinnerIdade.getValue().toString());
 
-			if (textMetro.getText().toString().equals("")
-					|| textCm.getText().toString().equals("")
-					|| textKilo.getText().toString().equals("")
-					|| textGrama.getText().toString().equals("")) {
+				// Calcula o IMC (peso dividido pelo quadrado da altura)
+				imc = peso / Math.pow(altura, 2);
 
-				showMessageDialog(null,
-						"Favor preencher todos os campos obrigatórios",
-						"Alerta", JOptionPane.INFORMATION_MESSAGE);
+				// inserção dos atributos no PANEL RESULTADO
+				panelResultado.add(labelNomeTitulo);
 
-			} else if (!radioMan.isSelected() && !radioWoman.isSelected()) {
+				if (radioMan.isSelected() && idade >= 16) {
 
-				showMessageDialog(null, "Favor informar o genero", "Alerta",
-						JOptionPane.INFORMATION_MESSAGE);
-
-			} else {
-
-				try {
-					double altura = Double.parseDouble(textMetro.getText()
-							+ "." + textCm.getText());
-					double peso = Double.parseDouble(textKilo.getText() + "."
-							+ textGrama.getText());
-					int idade = Integer.parseInt(spinnerIdade.getValue()
-							.toString());
-
-					double imc = peso / Math.pow(altura, 2);
-
-					String resultado = "";
-					if (radioMan.isSelected() && idade >= 16) {
-
-						if (imc < 20.7) {
-							resultado = "Abaixo do peso";
-						} else if (imc >= 20.7 && imc < 26.5) {
-							resultado = "Peso Ideal";
-						} else if (imc >= 26.5 && imc < 27.9) {
-							resultado = "Pouco acima do peso";
-						} else if (imc >= 27.9 && imc < 31.2) {
-							resultado = "Acima do peso";
-						} else {
-							resultado = "Obeso";
-						}
-						
-						panelCalculo.setVisible(false);
-						panelResultado.setVisible(true);
-						
-						// JOptionPane.showMessageDialog(null, "Seu IMC é: " +
-						// imc
-						// + ".\nResultado: " + resultado + ".", "Aterta",
-						// INFORMATION_MESSAGE);
-
+					if (imc < 20.7) {
+						resultado = "abaixo do peso";
+					} else if (imc >= 20.7 && imc < 26.5) {
+						resultado = "com peso Ideal";
+					} else if (imc >= 26.5 && imc < 27.9) {
+						resultado = "pouco acima do peso";
+					} else if (imc >= 27.9 && imc < 31.2) {
+						resultado = "acima do peso";
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Site em Construção", "Aterta",
-								JOptionPane.WARNING_MESSAGE);
+						resultado = "obeso";
 					}
+					labelResultadoCalculo.setText("O cálculo do seu IMC é: "
+							+ Math.round(imc) + " e você esta " + resultado);
 
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(null, "Valores Inválios",
-							"Alerta", JOptionPane.ERROR_MESSAGE);
+					panelResultado.add(labelTabelaMan);
+					panelCalculo.setVisible(false);
+					panelResultado.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Site em Construção",
+							"Aterta", JOptionPane.WARNING_MESSAGE);
 				}
+
+				// Ocorre caso algum valor informado não for número
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "Valores Inválios",
+						"Alerta", JOptionPane.ERROR_MESSAGE);
 			}
+			// }
 
 		}
 
-		if (arg0.getSource() == buttonLimpar) {
+		// /////ACÃO BOTAO NOVO CÁLCULO
+		if (arg0.getSource() == buttonNovoCalculo) {
 
-			textCm.setText("");
-			textGrama.setText("");
-			textKilo.setText("");
-			textMetro.setText("");
-			spinnerIdade.setValue(16);
+			limpaText();
+			panelResultado.setVisible(false);
+			panelNome.setVisible(true);
+		}
+
+		// /////ACÃO BOTAO LIMPAR
+		if (arg0.getSource() == buttonLimpar) {
+			limpaText();
 		}
 	}
 
