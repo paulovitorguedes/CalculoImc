@@ -20,16 +20,71 @@
     <![endif]-->
 
     <!-- Estilo customizado -->
-    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="_css/estilo.css">
 
     <title>Calculadora IMC IMC</title>
 </head>
 
 <body>
 
-    <h1>Calculadora IMC</h1>
+    <div class="container">
+        <div class="row">
+            <div class="marcador col-md-8 offset-md-2 mt-3">
+                <header>
+                    <h1 class="display-4">Calculadora IMC</h1>
+                </header>
 
-    <!-- JavaScript (Opcional) -->
+                <section>
+                    <form action="">
+                        <div class="form-group">
+                            <!-- <input id="man" name="sex" type="radio">
+                            <label for="man">Masculino</label>
+                            <input id="woman" name="sex" type="radio">
+                            <label for="woman">Feminino</label> -->
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="man" name="sex">
+                                <label class="custom-control-label" for="man">Masculino</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="woman" name="sex">
+                                <label class="custom-control-label" for="woman">Feminino</label>
+                            </div>
+                                
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email-usuario">Nome</label>
+                            <input class="form-control" type="text" id="name" placeholder="Digite seu nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age">Idade</label>
+                            <input class="form-control" type="number" id="age" min="1"
+                                placeholder="Idade mínima de 1 ano">
+                        </div>
+
+                        <div class="form-inline">
+                            <div>
+                                <label for="size">Altura</label>
+                                <input id="size" class="form-control mr-4" type="text" placeholder="Altura em CM">
+                            </div>
+                            <div>
+                                <label for="age">Peso</label>
+                                <input class="form-control mr-4" type="text" placeholder="Peso em KG">
+                            </div>
+
+                        </div>
+
+                        <input class="btn btn-outline-primary mb-3 mt-4" type="submit" value="Calcular">
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript  -->
+    <script src="_js/script.js"></script>
     <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -1,0 +1,17 @@
+.marcador {
+    border: 2px solid lightskyblue;
+    border-radius: 25px;;
+}
+
+header {
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 20px;;
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-inline label {
+    justify-content: left;
+}
