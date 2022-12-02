@@ -35,12 +35,11 @@
                 </header>
 
                 <section>
+
                     <form action="">
+
+                        <!-- Radio buttom para Masculino e Feminino -->
                         <div class="form-group">
-                            <!-- <input id="man" name="sex" type="radio">
-                            <label for="man">Masculino</label>
-                            <input id="woman" name="sex" type="radio">
-                            <label for="woman">Feminino</label> -->
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="man" name="sex">
                                 <label class="custom-control-label" for="man">Masculino</label>
@@ -49,32 +48,34 @@
                                 <input type="radio" class="custom-control-input" id="woman" name="sex">
                                 <label class="custom-control-label" for="woman">Feminino</label>
                             </div>
-                                
                         </div>
 
+                        <!-- Input text para nome do usuário -->
                         <div class="form-group">
-                            <label for="email-usuario">Nome</label>
-                            <input class="form-control" type="text" id="name" placeholder="Digite seu nome">
+                            <label for="name">Nome</label>
+                            <input class="form-control" type="text" id="name" placeholder="Digite seu nome" onblur="validarInputEmpty('name')">
                         </div>
 
+                        <!-- Input number para idade do usuário, minimo de 1 ano -->
                         <div class="form-group">
                             <label for="age">Idade</label>
                             <input class="form-control" type="number" id="age" min="1"
-                                placeholder="Idade mínima de 1 ano">
+                                placeholder="Idade mínima de 1 ano" onblur="validarInputEmpty('age')">
                         </div>
 
+                        <!-- Input text para idade e peso apresentados na mesma linha (inline) -->
                         <div class="form-inline">
                             <div>
                                 <label for="size">Altura</label>
-                                <input id="size" class="form-control mr-4" type="text" placeholder="Altura em CM">
+                                <input id="size" class="form-control mr-4" type="text" placeholder="Altura em CM" onblur="validarInputEmpty('size')">
                             </div>
                             <div>
-                                <label for="age">Peso</label>
-                                <input class="form-control mr-4" type="text" placeholder="Peso em KG">
+                                <label for="peso">Peso</label>
+                                <input id="peso" class="form-control mr-4" type="text" placeholder="Peso em KG" onblur="validarInputEmpty('peso')">
                             </div>
-
                         </div>
 
+                        <!-- Botão para inicializar o calculo imc -->
                         <input class="btn btn-outline-primary mb-3 mt-4" type="submit" value="Calcular">
                     </form>
                 </section>
