@@ -1,19 +1,19 @@
 function validarInputEmpty(id) {
     let valor = document.getElementById(id).value;
     let c = document.getElementById(id).className;
-    let result = "invalid";
+    let result = true;
     if (id == "name") {
         if (!(isNaN(valor)) || valor == "") {
             document.getElementById(id).className = c + " " + 'is-invalid';
-            return result;
+            result = false;
         }
-    } else if(valor == "" || valor <= 0) {
-        document.getElementById(id).className = c + " " + 'is-invalid';
-        return result;
-    } else {
-        result = "ok";
-        return result;
+    } else { 
+        if(valor == "" || valor <= 0) {
+            document.getElementById(id).className = c + " " + 'is-invalid';
+            result = false;
+        }
     }
+    return result;
 }
 
 function validarInput(id) {
@@ -33,4 +33,27 @@ function validarInput(id) {
         }
         document.getElementById(id).className = result;
     }
+    document.getElementById("fail").innerHTML = "";
+}
+
+function calcularImc(nome, idade, altura, peso) {
+    validarInput(nome);
+    validarInput(idade);
+    validarInput(altura);
+    validarInput(peso);
+
+    var indice = new Array(nome, idade, altura, peso);
+    var cont = 0;
+    for (const i in indice) {
+        if(!validarInputEmpty(indice[i])) {
+            cont++;
+        }
+    }
+    if(cont > 0) {
+        document.getElementById("fail").innerHTML = "<div class='alert alert-danger alert-dismissible mt-3'><button class='close' type='button' data-dismiss='alert'> &times; </button>Por favor revise os dados digitados!</div>";
+
+        // document.getElementById("fail").innerHTML = "teste";
+    }
+    console.log(cont);
+
 }
