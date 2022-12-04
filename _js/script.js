@@ -50,7 +50,7 @@ function calcularImc(nome, idade, altura, peso) {
         }
     }
     if(cont > 0) {
-        document.getElementById("fail").innerHTML = "<div class='alert alert-danger alert-dismissible mt-3'><button class='close' type='button' data-dismiss='alert'> &times; </button>Por favor revise os dados digitados!</div>";
+        document.getElementById("fail").innerHTML = "<div class='alert alert-danger alert-dismissible mt-2'><button class='close' type='button' data-dismiss='alert'> &times; </button>Por favor revise os dados digitados!</div>";
 
         // document.getElementById("fail").innerHTML = "teste";
     }
