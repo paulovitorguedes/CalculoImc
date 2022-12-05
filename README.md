@@ -1,6 +1,8 @@
 # CalculoImc
 Calculadora de IMC (o peso ideal)
 
+![Interface-projeto-calculadora-IMC](_interface/principal.png)
+
 A classificação do índice de massa corporal (IMC) pode ajudar a identificar problemas de obesidade ou desnutrição, em crianças, adolescentes, adultos e idosos.
 
 Além de calcular o valor de IMC, esta calculadora também indica qual o intervalo de peso ideal que deve ter para garantir uma melhor qualidade de vida.
@@ -16,5 +18,5 @@ ___
  - [x] Análise dos dados preenchidos
  - [x] Atribuir a classe is-invalid aos input text em caso de erros de preenchimento ou vazios
  - [x] Após acionar o botao calcular, apresentar barra de alerta com informação de falha de preenchimento caso houver
- - [ ] Função CalclarImc
- - [ ] Apresentar o resultado na tela
+ - [x] Função CalclarImc
+ - [x] Apresentar o resultado na tela
