@@ -1,6 +1,9 @@
 # CalculoImc
 Calculadora de IMC (o peso ideal)
 
+[Acesse aqui CalculoImc](https://paulovitorguedes-calculadora-imc.netlify.app/)
+#### Projeto em *HTML*, *CSS*, *BOOTSTRAP* e *JAVASCRIPT*
+
 ![Interface-projeto-calculadora-IMC](_interface/principal.png)
 
 A classificação do índice de massa corporal (IMC) pode ajudar a identificar problemas de obesidade ou desnutrição, em crianças, adolescentes, adultos e idosos.
