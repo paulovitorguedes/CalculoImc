@@ -4,7 +4,7 @@
 }
 
 header {
-    border-bottom: 1px solid lightgray;
+    border-bottom: 3px solid lightgray;
     margin-bottom: 20px;;
 }
 
@@ -14,4 +14,8 @@ h1 {
 
 .form-inline label {
     justify-content: left;
+}
+
+.form-group label {
+    margin-bottom: 0;
 }
