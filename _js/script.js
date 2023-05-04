@@ -1,15 +1,14 @@
 function validarInputEmpty(id) {
-    let valor = document.getElementById(id).value;
-    let c = document.getElementById(id).className;
+    let valor = document.getElementById(id);
     let result = true;
     if (id == "name") {
-        if (!(isNaN(valor)) || valor == "") {
-            document.getElementById(id).className = c + " " + 'is-invalid';
+        if (!(isNaN(valor.value)) || valor.value == "") {
+            document.getElementById(id).className = valor.className + " " + 'is-invalid';
             result = false;
         }
     } else {
-        if (valor == "" || valor <= 0) {
-            document.getElementById(id).className = c + " " + 'is-invalid';
+        if (valor.value == "" || valor.value <= 0) {
+            document.getElementById(id).className = valor.className + " " + 'is-invalid';
             result = false;
         }
     }
