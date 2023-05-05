@@ -17,15 +17,14 @@ function validarInputEmpty(id) {
 
 
 
-//A função remove a class is-invalid dos imput text ao atribuir o foco
+//A função remove a class is-invalid dos imput text caso exista ao atribuir o foco ( click )
 function validarInput(id) {
-     
+
     let classe = document.getElementById(id);
 
     if (classe.className.indexOf('is-invalid') >= 0) {
-        
-        console.log(classe.className);
         document.getElementById(id).className = classe.className.replace('is-invalid', "").trim();
+    }
 
     document.getElementById("fail").innerHTML = "";
 }
@@ -71,20 +70,20 @@ function calcularImc(nome, idade, altura, peso) {
         }
 
 
-        if(vsex == "m") {
+        if (vsex == "m") {
             document.getElementById("renome").innerHTML = "Olá " + document.getElementById(nome).value;
             document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc + "</strong> (Masculino)";
 
-            if(imc < 20.7) {
+            if (imc < 20.7) {
                 document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Abaixo do peso </strong>"
             } else {
-                if(imc >= 20.7 && imc <= 26.4) {
+                if (imc >= 20.7 && imc <= 26.4) {
                     document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Peso ideal </strong>"
                 } else {
-                    if(imc > 26.4 && imc <= 27.8) {
+                    if (imc > 26.4 && imc <= 27.8) {
                         document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Pouco acima do peso </strong>"
                     } else {
-                        if(imc > 27.8 && imc <= 31.1) {
+                        if (imc > 27.8 && imc <= 31.1) {
                             document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Acima do peso </strong>"
                         } else {
                             document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Obesidade </strong>"
@@ -95,20 +94,20 @@ function calcularImc(nome, idade, altura, peso) {
         }
 
 
-        if(vsex == "f") {
+        if (vsex == "f") {
             document.getElementById("renome").innerHTML = "Olá " + document.getElementById(nome).value;
             document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc + "</strong> (Feminino)";
 
-            if(imc < 19.1) {
+            if (imc < 19.1) {
                 document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Abaixo do peso </strong>"
             } else {
-                if(imc >= 19.1 && imc <= 25.8) {
+                if (imc >= 19.1 && imc <= 25.8) {
                     document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Peso ideal </strong>"
                 } else {
-                    if(imc > 25.8 && imc <= 27.3) {
+                    if (imc > 25.8 && imc <= 27.3) {
                         document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Pouco acima do peso </strong>"
                     } else {
-                        if(imc > 27.3 && imc <= 32.3) {
+                        if (imc > 27.3 && imc <= 32.3) {
                             document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Acima do peso </strong>"
                         } else {
                             document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Obesidade </strong>"
