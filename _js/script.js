@@ -32,14 +32,9 @@ function validarInput(id) {
 
 
 
-function calcularImc(nome, idade, altura, peso) {
+function calcularImc(...param) {//nome, idade, altura, peso
 
-
-    validarInput(nome);
-    validarInput(idade);
-    validarInput(altura);
-    validarInput(peso);
-
+    param.forEach(validarInput);
 
     var indice = new Array(nome, idade, altura, peso);
     var cont = 0;
