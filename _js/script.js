@@ -15,39 +15,43 @@ function validarInputEmpty(id) {
     return result;
 }
 
-function validarInput(id) {
-    // variável 'classe' recebe os atributos da classe  
-    let classe = document.getElementById(id).className;
 
-    // match ver se a string "is-invalid" está contida na variável 'ver'
-    // caso positivo, 'ver' vai receber o valor "is-invalid" 
-    let ver = classe.match("is-invalid");
-    if (ver == "is-invalid") {
-        // split vai dividir uma cadeia de caracteres em uma matriz de substrings. 
-        // neste caso o parametro para divisao é  " ".
-        let array = classe.split(" ");
-        let result = '';
-        for (let i = 0; i < array.length - 1; i++) {
-            result += array[i] + " ";
-        }
-        document.getElementById(id).className = result;
-    }
+
+//A função remove a class is-invalid dos imput text ao atribuir o foco
+function validarInput(id) {
+     
+    let classe = document.getElementById(id);
+
+    if (classe.className.indexOf('is-invalid') >= 0) {
+        
+        console.log(classe.className);
+        document.getElementById(id).className = classe.className.replace('is-invalid', "").trim();
+
     document.getElementById("fail").innerHTML = "";
 }
 
+
+
+
 function calcularImc(nome, idade, altura, peso) {
+
+
     validarInput(nome);
     validarInput(idade);
     validarInput(altura);
     validarInput(peso);
 
+
     var indice = new Array(nome, idade, altura, peso);
     var cont = 0;
-    for (const i in indice) {
+    for (let i in indice) {
         if (!validarInputEmpty(indice[i])) {
             cont++;
         }
     }
+
+
+
     if (cont > 0) {
         document.getElementById("fail").innerHTML = "<div class='alert alert-danger alert-dismissible mt-2'><button class='close' type='button' data-dismiss='alert'> &times; </button>Por favor revise os dados digitados!</div>";
     } else {
