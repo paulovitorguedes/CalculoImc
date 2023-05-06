@@ -36,18 +36,18 @@ function calcularImc(...param) {//nome, idade, altura, peso
 
     param.forEach(validarInput);
 
-    var indice = new Array(nome, idade, altura, peso);
-    var cont = 0;
-    for (let i in indice) {
-        if (!validarInputEmpty(indice[i])) {
-            cont++;
+    let valid = true;
+    for (const i in param) {
+        if (!validarInputEmpty(param[i])) {
+            valid = false;
         }
     }
 
+    let [nome, , altura, peso] = param;
 
-
-    if (cont > 0) {
+    if (!valid) {
         document.getElementById("fail").innerHTML = "<div class='alert alert-danger alert-dismissible mt-2'><button class='close' type='button' data-dismiss='alert'> &times; </button>Por favor revise os dados digitados!</div>";
+
     } else {
         peso = parseFloat(document.getElementById(peso).value);
         altura = parseFloat(document.getElementById(altura).value / 100);
@@ -67,25 +67,36 @@ function calcularImc(...param) {//nome, idade, altura, peso
 
         if (vsex == "m") {
             document.getElementById("renome").innerHTML = "Olá " + document.getElementById(nome).value;
-            document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc + "</strong> (Masculino)";
+            document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc.toFixed(2) + "</strong> (Masculino)";
 
-            if (imc < 20.7) {
-                document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Abaixo do peso </strong>"
-            } else {
-                if (imc >= 20.7 && imc <= 26.4) {
-                    document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Peso ideal </strong>"
-                } else {
-                    if (imc > 26.4 && imc <= 27.8) {
-                        document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Pouco acima do peso </strong>"
-                    } else {
-                        if (imc > 27.8 && imc <= 31.1) {
-                            document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Acima do peso </strong>"
-                        } else {
-                            document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Obesidade </strong>"
-                        }
-                    }
-                }
+            if (imc < 16) {
+                document.getElementById("reimc").innerHTML = "Seu IMC é menor que 16, encontra-se na categoria: <strong> Magreza Grave </strong>";
+
+            } else if (imc >= 16 && imc < 17) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 16 e 17, encontra-se na categoria: <strong> Magreza Moderada </strong>";
+
+            } else if (imc >= 17 && imc < 18.5) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 17 e 18.5, encontra-se na categoria: <strong> Magreza Leve </strong>";
+
+            } else if (imc >= 18,5 && imc < 25) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 18.5 e 25, encontra-se na categoria: <strong> Saudável </strong>";
+
+            } else if (imc >= 25 && imc < 30) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 25 e 30, encontra-se na categoria: <strong> Sobrepeso </strong>";
+
+            } else if (imc >= 30 && imc < 35) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 30 e 35, encontra-se na categoria: <strong> Obesidade Grau I </strong>";
+            
+            } else if (imc >= 35 && imc < 40) {
+                document.getElementById("reimc").innerHTML = "Seu IMC está entre 30 e 35, encontra-se na categoria: <strong> Obesidade Grau II (considerada severa) </strong>";
+            
+            } else if (imc >= 40 ) {
+                document.getElementById("reimc").innerHTML = "Seu IMC é 40 ou Siperior, encontra-se na categoria: <strong> Obesidade Grau III (considerada mórbida) </strong>";
+            
             }
+
+
+
         }
 
 
@@ -93,10 +104,10 @@ function calcularImc(...param) {//nome, idade, altura, peso
             document.getElementById("renome").innerHTML = "Olá " + document.getElementById(nome).value;
             document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc + "</strong> (Feminino)";
 
-            if (imc < 19.1) {
-                document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Abaixo do peso </strong>"
+            if (imc < 16) {
+                document.getElementById("reimc").innerHTML = "Seu IMC é '< 16' encontra-se na categoria: <strong> Magreza Grave </strong>"
             } else {
-                if (imc >= 19.1 && imc <= 25.8) {
+                if (imc >= 16 && imc <= 25.8) {
                     document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Peso ideal </strong>"
                 } else {
                     if (imc > 25.8 && imc <= 27.3) {
