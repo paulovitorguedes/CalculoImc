@@ -91,36 +91,18 @@ function calcularImc(...param) {//nome, idade, altura, peso
                 document.getElementById("reimc").innerHTML = "Seu IMC está entre 30 e 35, encontra-se na categoria: <strong> Obesidade Grau II (considerada severa) </strong>";
             
             } else if (imc >= 40 ) {
-                document.getElementById("reimc").innerHTML = "Seu IMC é 40 ou Siperior, encontra-se na categoria: <strong> Obesidade Grau III (considerada mórbida) </strong>";
+                document.getElementById("reimc").innerHTML = "Seu IMC é 40 ou Superior, encontra-se na categoria: <strong> Obesidade Grau III (considerada mórbida) </strong>";
             
             }
-
-
-
         }
 
 
         if (vsex == "f") {
             document.getElementById("renome").innerHTML = "Olá " + document.getElementById(nome).value;
-            document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc + "</strong> (Feminino)";
+            document.getElementById("recalculo").innerHTML = "Seu cálculo IMC é de: <strong>" + imc.toFixed(2) + "</strong> (Feminino)";
 
-            if (imc < 16) {
-                document.getElementById("reimc").innerHTML = "Seu IMC é '< 16' encontra-se na categoria: <strong> Magreza Grave </strong>"
-            } else {
-                if (imc >= 16 && imc <= 25.8) {
-                    document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Peso ideal </strong>"
-                } else {
-                    if (imc > 25.8 && imc <= 27.3) {
-                        document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Pouco acima do peso </strong>"
-                    } else {
-                        if (imc > 27.3 && imc <= 32.3) {
-                            document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Acima do peso </strong>"
-                        } else {
-                            document.getElementById("reimc").innerHTML = "Você encontra-se na categoria: <strong> Obesidade </strong>"
-                        }
-                    }
-                }
-            }
+            document.getElementById("reimc").innerHTML = "<strong>Seu IMC está ótimo e você está PERFEITA, Parabéns!!!!!!</strong>";
+            
         }
     }
 }
