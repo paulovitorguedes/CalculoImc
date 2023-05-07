@@ -40,4 +40,11 @@ Menor que 16 | Magreza Grave
 35 a menor que 40 | Obesidade Grau II (considerada severa)
 Maior que 40 | Obesidade Grau III (considerada mórbida)
 
-
+___
+ ### Meus objetivos e aprendizado com o projeto 
+ - [x] Apresentação com formulário para entrada de dados 
+ - [x] Análise dos dados preenchidos
+ - [x] Atribuir a classe is-invalid aos input text em caso de erros de preenchimento ou vazios
+ - [x] Após acionar o botão calcular, apresentar barra de alerta com informação de falha de preenchimento caso houver
+ - [x] Função CalclarImc retornando calculo (peso / altura * altura)
+ - [x] Apresentar o resultado na tela
