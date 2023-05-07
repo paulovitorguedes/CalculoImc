@@ -22,3 +22,22 @@ peso = parseFloat(document.getElementById(peso).value);
 altura = parseFloat(document.getElementById(altura).value / 100);
 let imc = peso / (Math.pow(altura, 2));
 ```
+
+___
+
+### Tabela de resultados
+Segundo o Ministério da Saúde, o resultado deve ser interpretado de acordo com a tabela abaixo.
+[Referência vitat.com.br](https://vitat.com.br/calcular-o-imc/)
+
+Indice IMC |  Caracteristica
+:--- | :---
+Menor que 16 | Magreza Grave 
+16 a menor que 17 | Magreza Moderada
+17 a menor que 18,5 | Magreza Leve
+18,5 a menor que 25 | Saudável
+25 a menor que 30 | Sobrepeso
+30 a menor que 35 | Obesidade Grau I
+35 a menor que 40 | Obesidade Grau II (considerada severa)
+Maior que 40 | Obesidade Grau III (considerada mórbida)
+
+
